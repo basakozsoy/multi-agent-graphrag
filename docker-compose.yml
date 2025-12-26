@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Qdrant - Vector Database
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: rag-qdrant
+    ports:
+      - "6333:6333"  # REST API
+      - "6334:6334"  # gRPC API
+    volumes:
+      - ./qdrant_storage:/qdrant/storage:z
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    restart: unless-stopped
+    networks:
+      - rag-network
+
+  # Neo4j - Graph Database
+  neo4j:
+    image: neo4j:latest
+    container_name: rag-neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    volumes:
+      - ./neo4j_data:/data
+      - ./neo4j_logs:/logs
+    environment:
+      - NEO4J_AUTH=neo4j/password123
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_dbms_memory_heap_initial__size=512m
+      - NEO4J_dbms_memory_heap_max__size=2G
+    restart: unless-stopped
+    networks:
+      - rag-network
+
+networks:
+  rag-network:
+    driver: bridge
+
+volumes:
+  qdrant_storage:
+  neo4j_data:
+  neo4j_logs:

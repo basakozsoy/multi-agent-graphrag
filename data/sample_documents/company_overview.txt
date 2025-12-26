@@ -1,0 +1,37 @@
+# Acme Corporation - Company Overview
+
+Acme Corporation is a leading technology company founded in 2010 by Alice Johnson. The company specializes in enterprise software solutions and has grown to serve over 10,000 clients worldwide.
+
+## Mission Statement
+
+"To empower businesses through innovative technology solutions that drive growth and efficiency."
+
+## Company Values
+
+- **Innovation**: We constantly push boundaries and explore new technologies
+- **Integrity**: We maintain the highest ethical standards in all our operations  
+- **Collaboration**: We believe in the power of teamwork and open communication
+- **Excellence**: We strive for excellence in everything we do
+- **Customer Focus**: Our customers' success is our success
+
+## Company History
+
+### 2010: The Beginning
+Alice Johnson founded Acme Corp with a vision to revolutionize enterprise software. Starting with just 5 employees in a small office, the company launched its first product - a cloud-based project management tool.
+
+### 2015: Major Growth
+The company reached 100 employees and secured Series B funding of $50 million. This allowed expansion into new markets and the development of additional product lines.
+
+### 2020: Going Global
+Acme Corp opened international offices in London, Tokyo, and Singapore. The employee count reached 500, and annual revenue exceeded $100 million.
+
+### 2024: AI Innovation
+Under the leadership of CTO Bob Smith, Acme launched Project Phoenix - an ambitious initiative to integrate AI across all product offerings.
+
+## Current Status
+
+- **Employees**: 500+
+- **Annual Revenue**: $150 million
+- **Clients**: 10,000+
+- **Offices**: 4 (San Francisco, London, Tokyo, Singapore)
+- **Products**: 12 major product lines

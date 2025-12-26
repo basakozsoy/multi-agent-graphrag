@@ -1,0 +1,111 @@
+# Acme Corporation - Organizational Structure
+
+## Executive Leadership
+
+### Alice Johnson - Chief Executive Officer (CEO)
+- Founded Acme Corp in 2010
+- Background: Computer Science (MIT), MBA (Stanford)
+- Experience: 20+ years in enterprise software
+- Focus: Overall company strategy and vision
+- Email: alice.johnson@acmecorp.com
+
+### Bob Smith - Chief Technology Officer (CTO)
+- Joined: 2012
+- Reports to: Alice Johnson (CEO)
+- Background: PhD in Computer Science (Berkeley)
+- Specialization: Distributed systems and machine learning
+- Manages: Engineering department (150 people)
+- Current project: Leading Project Phoenix (AI initiative)
+- Email: bob.smith@acmecorp.com
+
+### Carol Davis - Chief Financial Officer (CFO)
+- Joined: 2014
+- Reports to: Alice Johnson (CEO)
+- Background: Accounting (Harvard), CPA
+- Manages: Finance department (30 people)
+- Responsibilities: Financial planning, budgeting, investor relations
+- Email: carol.davis@acmecorp.com
+
+### David Martinez - Chief Marketing Officer (CMO)
+- Joined: 2016
+- Reports to: Alice Johnson (CEO)
+- Background: Marketing (Northwestern), 15 years experience
+- Manages: Marketing department (40 people)
+- Responsibilities: Brand strategy, customer acquisition, partnerships
+- Email: david.martinez@acmecorp.com
+
+## Engineering Department
+
+Led by Bob Smith (CTO), the engineering department is organized into several teams:
+
+### Machine Learning Team
+- **Team Lead**: Dr. Emily Chen
+- **Reports to**: Bob Smith (CTO)
+- **Size**: 25 engineers
+- **Focus**: AI/ML models, data science, Project Phoenix
+- **Key projects**: 
+  - Project Phoenix (AI integration)
+  - Recommendation engine
+  - Predictive analytics platform
+
+### Backend Engineering Team
+- **Team Lead**: Frank Wilson
+- **Reports to**: Bob Smith (CTO)
+- **Size**: 40 engineers
+- **Focus**: Server infrastructure, APIs, databases
+- **Technologies**: Python, Java, PostgreSQL, Redis
+
+### Frontend Engineering Team
+- **Team Lead**: Grace Park
+- **Reports to**: Bob Smith (CTO)
+- **Size**: 35 engineers
+- **Focus**: Web applications, mobile apps, UI/UX
+- **Technologies**: React, TypeScript, React Native
+
+### DevOps Team
+- **Team Lead**: Henry Liu
+- **Reports to**: Bob Smith (CTO)
+- **Size**: 20 engineers
+- **Focus**: Infrastructure, CI/CD, monitoring
+- **Technologies**: Kubernetes, Docker, AWS, Terraform
+
+### QA Team
+- **Team Lead**: Isabella Rodriguez
+- **Reports to**: Bob Smith (CTO)
+- **Size**: 30 engineers
+- **Focus**: Testing, quality assurance, automation
+
+## Reporting Structure
+
+```
+CEO (Alice Johnson)
+├── CTO (Bob Smith)
+│   ├── ML Team (Emily Chen)
+│   ├── Backend Team (Frank Wilson)
+│   ├── Frontend Team (Grace Park)
+│   ├── DevOps Team (Henry Liu)
+│   └── QA Team (Isabella Rodriguez)
+├── CFO (Carol Davis)
+│   ├── Accounting Team
+│   ├── Financial Planning Team
+│   └── Investor Relations Team
+├── CMO (David Martinez)
+│   ├── Brand Team
+│   ├── Digital Marketing Team
+│   ├── Content Team
+│   └── Partnerships Team
+└── CHRO (Jennifer White)
+    ├── Recruiting Team
+    ├── Employee Relations Team
+    ├── Learning & Development Team
+    └── Compensation & Benefits Team
+```
+
+## Cross-Functional Collaboration
+
+Teams frequently collaborate on major initiatives:
+
+- **Project Phoenix**: ML Team + Backend Team + Frontend Team
+- **Customer Portal Redesign**: Frontend Team + UX Team + Marketing
+- **Infrastructure Modernization**: DevOps Team + Backend Team
+- **Security Initiative**: All engineering teams + External consultants

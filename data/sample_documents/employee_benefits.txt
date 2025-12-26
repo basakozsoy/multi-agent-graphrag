@@ -1,0 +1,175 @@
+# Acme Corporation - Employee Benefits Guide
+
+## Overview
+
+Acme Corporation is committed to providing comprehensive benefits that support our employees' health, financial security, and work-life balance.
+
+## Health & Wellness
+
+### Medical Insurance
+- **Provider**: BlueCross BlueShield
+- **Coverage**: Medical, dental, vision
+- **Employee Cost**: Company pays 90% of premiums
+- **Family Coverage**: Available at subsidized rates
+- **Enrollment**: Benefits start on first day of employment
+
+### Dental Insurance
+- **Provider**: Delta Dental
+- **Coverage**: Preventive, basic, and major services
+- **Annual Maximum**: $2,000 per person
+- **Employee Cost**: 100% company paid
+
+### Vision Insurance
+- **Provider**: VSP
+- **Coverage**: Eye exams, lenses, frames
+- **Frequency**: Annual eye exam, new lenses/frames every 2 years
+- **Employee Cost**: 100% company paid
+
+### Mental Health
+- **Counseling Services**: 12 free sessions per year through Employee Assistance Program
+- **Provider Network**: Extensive network of licensed therapists
+- **Confidentiality**: 100% confidential
+- **Access**: 24/7 crisis hotline available
+
+### Wellness Programs
+- **Gym Membership**: $50/month reimbursement
+- **Wellness Challenges**: Quarterly fitness challenges with prizes
+- **Healthy Snacks**: Free fruits and healthy snacks in all offices
+- **Standing Desks**: Available upon request
+- **Ergonomic Equipment**: Fully covered
+
+## Time Off
+
+### Paid Time Off (PTO)
+- **Accrual Rate**: 1.25 days per month (15 days per year)
+- **Year 3+**: 1.67 days per month (20 days per year)
+- **Year 5+**: 2.08 days per month (25 days per year)
+- **Carryover**: Up to 5 days can roll over to next year
+- **Usage**: Must be submitted 2 weeks in advance for trips > 5 days
+
+### Holidays
+- **Paid Holidays**: 12 per year
+  - New Year's Day
+  - Martin Luther King Jr. Day
+  - President's Day
+  - Memorial Day
+  - Independence Day
+  - Labor Day
+  - Thanksgiving (2 days)
+  - Christmas (2 days)
+  - 2 Floating Holidays (your choice)
+
+### Sick Leave
+- **Accrual**: 1 day per month (12 days per year)
+- **No Carryover**: Use it or lose it
+- **Documentation**: Doctor's note required for 3+ consecutive days
+- **Family Care**: Can be used for sick family members
+
+### Parental Leave
+- **Maternity Leave**: 16 weeks fully paid
+- **Paternity Leave**: 8 weeks fully paid
+- **Adoption Leave**: 12 weeks fully paid
+- **Flexibility**: Can be taken within first year
+- **Job Protection**: Guaranteed return to same or equivalent role
+
+## Financial Benefits
+
+### Retirement
+
+#### 401(k) Plan
+- **Provider**: Fidelity Investments
+- **Eligibility**: Immediate (day 1)
+- **Employee Contribution**: Up to IRS maximum
+- **Company Match**: 100% match up to 6% of salary
+- **Vesting**: Immediate (100% vested from day 1)
+- **Investment Options**: 25+ fund options
+
+#### Stock Options
+- **Eligibility**: All employees
+- **Grant**: Based on level and performance
+- **Vesting Schedule**: 4 years (25% per year)
+- **Strike Price**: Fair market value at grant date
+
+### Bonuses
+- **Annual Bonus**: 10-20% of base salary (performance-based)
+- **Spot Bonuses**: $500-$2,000 for exceptional work
+- **Referral Bonus**: $5,000 for successful referrals
+
+### Professional Development
+- **Annual Budget**: $2,000 per employee
+- **Uses**: Conferences, courses, certifications, books
+- **Conference Travel**: Fully covered (separate from $2,000 budget)
+- **Internal Training**: Unlimited free access to LinkedIn Learning
+
+## Work-Life Balance
+
+### Flexible Work
+- **Remote Work**: 3 days per week work from home
+- **Core Hours**: 10 AM - 3 PM (must be available)
+- **Flexible Schedule**: Start between 7-10 AM
+- **Equipment**: Company provides laptop, monitor, accessories
+
+### Commuter Benefits
+- **Transit Pass**: Up to $280/month pre-tax
+- **Parking**: $150/month subsidy
+- **Bike Incentive**: $50/month for bike commuters
+
+### Family Support
+- **Childcare Subsidy**: $500/month
+- **Backup Childcare**: 10 days per year through Bright Horizons
+- **Elder Care**: Support and resources through EAP
+
+## Additional Perks
+
+### Office Perks
+- **Free Lunch**: Catered lunch Monday-Friday
+- **Coffee & Tea**: Premium coffee and tea bar
+- **Game Room**: Ping pong, foosball, video games
+- **Nap Rooms**: Available for power naps
+- **Mother's Room**: Private lactation rooms
+
+### Learning & Development
+- **Book Club**: Monthly book club with free books
+- **Tech Talks**: Weekly internal presentations
+- **Hackathons**: Quarterly innovation hackathons
+- **20% Time**: Can dedicate 20% of time to passion projects
+
+### Social Events
+- **Team Outings**: Quarterly team-building events
+- **Company Parties**: Annual holiday party and summer picnic
+- **Happy Hours**: Monthly sponsored happy hours
+- **Interest Groups**: Employee resource groups (ERGs)
+
+## Life & Disability Insurance
+
+### Life Insurance
+- **Basic**: 2x annual salary (company paid)
+- **Supplemental**: Can purchase up to 5x salary
+- **Dependent Coverage**: Available for spouse and children
+
+### Disability Insurance
+- **Short-term**: 60% of salary for up to 6 months
+- **Long-term**: 60% of salary after 6 months
+- **Coverage**: Covers illness and injury
+
+## How to Enroll
+
+1. **New Hire Enrollment**: Within 30 days of start date
+2. **Portal**: benefits.acmecorp.com
+3. **Support**: benefits@acmecorp.com
+4. **Office Hours**: HR holds benefits office hours every Wednesday 2-4 PM
+
+## Annual Open Enrollment
+
+- **When**: Every November
+- **Changes**: Can modify all benefits elections
+- **Effective Date**: January 1 of following year
+- **Communication**: Email reminders sent starting October
+
+## Questions?
+
+Contact our Benefits Team:
+- **Email**: benefits@acmecorp.com
+- **Phone**: (415) 555-0123
+- **In-Person**: HR office (3rd floor, Building A)
+- **FAQ**: Internal wiki at wiki.acmecorp.com/benefits

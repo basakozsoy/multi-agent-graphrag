@@ -6,7 +6,13 @@ Implements triple hybrid retrieval combining:
 2. Graph search - entity relationship traversal using Neo4j  
 3. BM25 search - keyword-based statistical ranking
 
-Results are merged using Reciprocal Rank Fusion (RRF) with optimized weighting.
+Results are merged using Reciprocal Rank Fusion (RRF) with optimized weighting
+and automatic deduplication to ensure diverse, non-redundant results.
+
+Deduplication Strategy:
+- Identifies duplicate documents by text content (first 200 chars)
+- Merges scores for duplicate content across different retrieval methods
+- Ensures final result set contains only unique documents
 """
 import os
 from pathlib import Path
@@ -26,7 +32,19 @@ class HybridRetriever:
         - bm25_only: Keyword-based search only
     """
     
-    def __init__(self, vector_store, graph_store):
+    def __init__(self, vector_store, graph_store, verbose=False):
+        """
+        Initialize hybrid retriever.
+        
+        Args:
+            vector_store: VectorStore instance for semantic search
+            graph_store: GraphStore instance for relationship-based search
+            verbose: If True, log deduplication statistics
+        """
+        self.vector_store = vector_store
+        self.graph_store = graph_store
+        self.bm25_retriever = None  # Lazy initialization
+        self.verbose = verbose
     
     def retrieve(self, query, top_k=5, strategy="hybrid"):
         """
@@ -88,11 +106,17 @@ class HybridRetriever:
     
     def _merge_results(self, results_list, weights, top_k):
         """
-        Reciprocal Rank Fusion (RRF) for multiple retrievers
+        Reciprocal Rank Fusion (RRF) for multiple retrievers with deduplication.
         
         Handles 3 result lists instead of 2.
         
         RRF formula: score = weight / (k + rank)
+        
+        Deduplication strategy:
+        1. Group by node_id (primary dedup key)
+        2. Additionally deduplicate by text content hash to catch duplicates
+           with different node_ids from different retrieval methods
+        3. Merge scores for true duplicates
         
         Args:
             results_list: List of [vector_results, graph_results, bm25_results]
@@ -115,12 +139,45 @@ class HybridRetriever:
             for node in results:
                 all_nodes[node.node.node_id] = node
         
+        # DEDUPLICATION STEP: Identify duplicates by text content
+        # Map text hash -> list of node_ids with that text
+        text_to_nodes = {}
+        for node_id, node_with_score in all_nodes.items():
+            # Use first 200 chars as hash key (handles slight variations)
+            text_key = node_with_score.node.text[:200].strip()
+            if text_key not in text_to_nodes:
+                text_to_nodes[text_key] = []
+            text_to_nodes[text_key].append(node_id)
+        
+        # Count duplicates found
+        total_before_dedup = len(all_nodes)
+        num_duplicate_groups = sum(1 for node_ids in text_to_nodes.values() if len(node_ids) > 1)
+        
+        # Merge scores for duplicate content, keep highest-scored node_id
+        deduped_scores = {}
+        deduped_nodes = {}
+        for text_key, node_ids in text_to_nodes.items():
+            # Sum scores from all duplicate node_ids
+            merged_score = sum(scores.get(nid, 0) for nid in node_ids)
+            # Keep the node with highest individual score as representative
+            best_node_id = max(node_ids, key=lambda nid: scores.get(nid, 0))
+            deduped_scores[best_node_id] = merged_score
+            deduped_nodes[best_node_id] = all_nodes[best_node_id]
+        
+        # Log deduplication stats if verbose
+        if self.verbose:
+            total_after_dedup = len(deduped_nodes)
+            duplicates_removed = total_before_dedup - total_after_dedup
+            if duplicates_removed > 0:
+                print(f"   🔄 Deduplication: {total_before_dedup} → {total_after_dedup} docs "
+                      f"({duplicates_removed} duplicates removed in {num_duplicate_groups} groups)")
+        
         # Sort by merged score
-        sorted_ids = sorted(scores.keys(), key=lambda x: scores[x], reverse=True)
+        sorted_ids = sorted(deduped_scores.keys(), key=lambda x: deduped_scores[x], reverse=True)
         
         # Return top-k with new scores
         return [
-            NodeWithScore(node=all_nodes[node_id].node, score=scores[node_id])
+            NodeWithScore(node=deduped_nodes[node_id].node, score=deduped_scores[node_id])
             for node_id in sorted_ids[:top_k]
-            if node_id in all_nodes
+            if node_id in deduped_nodes
         ]

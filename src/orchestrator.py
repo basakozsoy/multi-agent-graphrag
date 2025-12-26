@@ -16,7 +16,7 @@ from langgraph.graph import StateGraph, END
 from .models import create_models
 
 # Define the state that flows through the graph
-class AgentState(TypedDict):
+class AgentState(TypedDict, total=False):
     """
     State object passed between agents in the workflow.
     
@@ -32,6 +32,17 @@ class AgentState(TypedDict):
         final_answer: Generated answer from Analyst
         max_iterations: Maximum allowed retrieval attempts
     """
+    query: str
+    plan: str
+    retrieved_docs: List
+    best_docs: List
+    best_quality: float
+    retrieval_quality: float
+    feedback: str
+    iteration: int
+    final_answer: str
+    max_iterations: int
+    skip_planning: bool
 
 class PlannerAgent:
     """
@@ -89,7 +100,8 @@ class RetrieverAgent:
     
     def __call__(self, state: AgentState) -> AgentState:
         """Execute document retrieval with adaptive strategy selection."""
-        state['iteration'] += 1
+        # Initialize iteration if not present, then increment
+        state['iteration'] = state.get('iteration', 0) + 1
         iteration = state['iteration']
         query = state['query']
         

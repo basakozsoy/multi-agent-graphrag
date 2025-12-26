@@ -73,8 +73,14 @@ A production-ready retrieval-augmented generation system featuring multi-agent o
           Reciprocal Rank Fusion
                       │
                       ▼
+            Deduplication Step
+          (Merge duplicate docs)
+                      │
+                      ▼
               Top-5 Documents
 ```
+
+**Deduplication:** The hybrid retrieval automatically identifies and removes duplicate documents that may be retrieved by multiple methods (e.g., same document found by both vector and BM25 search). Scores are merged for duplicates, ensuring diverse and non-redundant results.
 
 ## Getting Started
 

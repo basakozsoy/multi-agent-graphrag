@@ -16,6 +16,7 @@ Deduplication Strategy:
 """
 import os
 from pathlib import Path
+from langsmith import traceable
 from llama_index.core.schema import NodeWithScore, TextNode
 from llama_index.core import SimpleDirectoryReader
 from llama_index.retrievers.bm25 import BM25Retriever
@@ -46,6 +47,7 @@ class HybridRetriever:
         self.bm25_retriever = None  # Lazy initialization
         self.verbose = verbose
     
+    @traceable(name="hybrid_retrieve", tags=["retrieval", "hybrid"])
     def retrieve(self, query, top_k=5, strategy="hybrid"):
         """
         Main retrieval method
@@ -65,15 +67,32 @@ class HybridRetriever:
             return self._bm25_search(query, top_k)
         
         else:
-            vector_results = self.vector_store.search(query, top_k)
-            graph_results = self.graph_store.search(query, top_k)
-            bm25_results = self._bm25_search(query, top_k)
+            vector_results = self._vector_search_traced(query, top_k)
+            graph_results = self._graph_search_traced(query, top_k)
+            bm25_results = self._bm25_search_traced(query, top_k)
             
             return self._merge_results(
                 [vector_results, graph_results, bm25_results], 
                 weights=[0.6, 0.1, 0.3],
                 top_k=top_k
             )
+    
+    @traceable(name="vector_search", tags=["retrieval", "vector"])
+    def _vector_search_traced(self, query, top_k):
+        """Vector search with tracing"""
+        results = self.vector_store.search(query, top_k)
+        return results
+    
+    @traceable(name="graph_search", tags=["retrieval", "graph"])
+    def _graph_search_traced(self, query, top_k):
+        """Graph search with tracing"""
+        results = self.graph_store.search(query, top_k)
+        return results
+    
+    @traceable(name="bm25_search", tags=["retrieval", "bm25"])
+    def _bm25_search_traced(self, query, top_k):
+        """BM25 search with tracing"""
+        return self._bm25_search(query, top_k)
     
     def _bm25_search(self, query, top_k=5):
         """
@@ -104,6 +123,7 @@ class HybridRetriever:
             return self.bm25_retriever.retrieve(query)
         return []
     
+    @traceable(name="rrf_merge", tags=["retrieval", "fusion"])
     def _merge_results(self, results_list, weights, top_k):
         """
         Reciprocal Rank Fusion (RRF) for multiple retrievers with deduplication.
@@ -126,12 +146,34 @@ class HybridRetriever:
         scores = {}
         k = 60  # RRF constant
         
+        # Track individual scores per method for tracing
+        method_names = ["vector", "graph", "bm25"]
+        score_breakdown = {method: {} for method in method_names}
+        
         # Process each retriever's results
-        for results, weight in zip(results_list, weights):
+        for method_name, results, weight in zip(method_names, results_list, weights):
             for rank, node in enumerate(results):
                 node_id = node.node.node_id
                 rrf_score = weight / (k + rank + 1)
                 scores[node_id] = scores.get(node_id, 0) + rrf_score
+                
+                # Track breakdown per method
+                score_breakdown[method_name][node_id] = {
+                    "rank": rank + 1,
+                    "weight": weight,
+                    "rrf_score": rrf_score
+                }
+        
+        # Log score breakdown if verbose
+        if self.verbose:
+            print(f"\n   📊 RRF Score Breakdown (top 3):")
+            sorted_by_score = sorted(scores.items(), key=lambda x: x[1], reverse=True)[:3]
+            for node_id, total_score in sorted_by_score:
+                print(f"   Node {node_id[:12]}... : {total_score:.4f}")
+                for method in method_names:
+                    if node_id in score_breakdown[method]:
+                        info = score_breakdown[method][node_id]
+                        print(f"      {method:8} → rank {info['rank']:2} × {info['weight']:.1f} = {info['rrf_score']:.4f}")
         
         # Combine all unique nodes
         all_nodes = {}

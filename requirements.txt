@@ -22,6 +22,9 @@ langgraph
 langchain
 langchain-core
 
+# Tracing & Observability
+langsmith
+
 # Utilities
 python-dotenv
 

@@ -131,7 +131,7 @@ A production-ready retrieval-augmented generation system featuring multi-agent o
 
 ## Getting Started
 
-### Option 1: Sample Corporate Documents (Quick Start)
+### Option 1: Quick Start with UI
 
 ```bash
 # Run the automated setup script
@@ -143,11 +143,23 @@ source venv/bin/activate
 # Index sample documents
 python scripts/index_documents.py
 
+# Launch interactive web UI
+streamlit run app.py
+```
+
+Open your browser to `http://localhost:8501` to access the interface.
+
+### Option 2: Sample Corporate Documents (CLI)
+
+```bash
+# Index sample documents
+python scripts/index_documents.py
+
 # Run the multi-agent demo
 python scripts/demo.py
 ```
 
-### Option 2: Python Q&A from Stack Overflow
+### Option 3: Python Q&A from Stack Overflow
 
 ```bash
 # Install dependencies

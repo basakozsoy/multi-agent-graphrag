@@ -25,6 +25,10 @@ langchain-core
 # Tracing & Observability
 langsmith
 
+# UI
+streamlit
+plotly
+
 # Utilities
 python-dotenv
 

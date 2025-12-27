@@ -84,6 +84,8 @@ A production-ready retrieval-augmented generation system featuring multi-agent o
 
 ## Getting Started
 
+### Option 1: Sample Corporate Documents (Quick Start)
+
 ```bash
 # Run the automated setup script
 ./setup.sh
@@ -96,6 +98,22 @@ python scripts/index_documents.py
 
 # Run the multi-agent demo
 python scripts/demo.py
+```
+
+### Option 2: Python Q&A from Stack Overflow
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Load Python Q&A (100 questions, score 10+)
+python scripts/load_stackoverflow_data.py
+
+# Load more questions
+python scripts/load_stackoverflow_data.py --limit 200
+
+# Run Python Q&A demo
+python scripts/demo_stackoverflow.py
 ```
 
 ## Project Structure

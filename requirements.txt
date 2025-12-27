@@ -24,3 +24,6 @@ langchain-core
 
 # Utilities
 python-dotenv
+
+# Data Sources
+requests

@@ -253,16 +253,21 @@ class AnalystAgent:
         
         # Use best documents found across all iterations
         docs = state.get('best_docs', state.get('retrieved_docs', []))
-        print(f"   Synthesizing answer from {len(docs)} documents...")
+        best_quality = state.get('best_quality', 0.0)
+        print(f"   Synthesizing answer from {len(docs)} documents (quality: {best_quality:.2f})...")
         
-        if not docs:
-            state['final_answer'] = "I couldn't find relevant information to answer your question."
+        # If no documents or very low quality, return early
+        if not docs or best_quality < 0.1:
+            state['final_answer'] = "I couldn't find relevant information to answer your question. The retrieved documents don't contain information about this topic."
             return state
         
-        # Build context
+        # Build context (limit length for low-quality docs to prevent timeouts)
+        max_docs = 3 if best_quality < 0.3 else 5
+        max_chars_per_doc = 300 if best_quality < 0.3 else 1000
+        
         context = "\n\n".join([
-            f"[Source {i+1}]\n{doc.text}"
-            for i, doc in enumerate(docs[:5])
+            f"[Source {i+1}]\n{doc.text[:max_chars_per_doc]}"
+            for i, doc in enumerate(docs[:max_docs])
         ])
         
         prompt = f"""You are an expert analyst. Provide a comprehensive answer based on the retrieved information.
@@ -275,17 +280,20 @@ Retrieved Information:
 Instructions:
 1. Answer the query thoroughly
 2. Cite specific sources [Source X]
-3. If information is incomplete, acknowledge it
+3. If information is incomplete or irrelevant, acknowledge it clearly
 4. Be concise but complete
 
 Answer:"""
         
-        response = self.llm.complete(prompt)
-        answer = response.text.strip()
+        try:
+            response = self.llm.complete(prompt)
+            answer = response.text.strip()
+            print(f"   Generated answer ({len(answer)} chars)")
+            state['final_answer'] = answer
+        except Exception as e:
+            print(f"   ⚠️  Error generating answer: {str(e)[:100]}")
+            state['final_answer'] = f"I encountered an issue generating the answer. The retrieved documents may not contain sufficient information about: {state['query']}"
         
-        print(f"   Generated answer ({len(answer)} chars)")
-        
-        state['final_answer'] = answer
         return state
 
 

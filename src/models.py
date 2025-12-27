@@ -37,7 +37,7 @@ def create_models():
         ollama_embed = os.getenv('OLLAMA_EMBEDDING_MODEL', 'nomic-embed-text')
         ollama_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
         
-        llm = Ollama(model=ollama_llm, base_url=ollama_url)
+        llm = Ollama(model=ollama_llm, base_url=ollama_url, request_timeout=120.0)
         embed = OllamaEmbedding(model_name=ollama_embed, base_url=ollama_url)
     
     Settings.llm = llm

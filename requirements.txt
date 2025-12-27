@@ -25,5 +25,11 @@ langchain-core
 # Utilities
 python-dotenv
 
+# Document Processing
+docling
+
+# Entity Matching
+rapidfuzz
+
 # Data Sources
 requests

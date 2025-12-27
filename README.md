@@ -1,17 +1,22 @@
 # Multi-Agent Self-Correcting RAG System
 
-A production-ready retrieval-augmented generation system featuring multi-agent orchestration with LangGraph, cyclic feedback loops, semantic chunking, and triple hybrid retrieval.
+A production-ready retrieval-augmented generation system featuring multi-agent orchestration with LangGraph, cyclic feedback loops, hierarchical chunking, and triple hybrid retrieval.
 
-**Implements**: GraphRAG + Hybrid Indexing + Agentic Self-Correction with LlamaIndex, Neo4j, and Qdrant
+**Implements**: GraphRAG + Advanced Document Processing + Entity Resolution + Agentic Self-Correction with LlamaIndex, Neo4j, and Qdrant
 
 ## Key Features
 
+### Core RAG Architecture
 - **Multi-Agent Orchestration**: Four specialized agents (Planner, Retriever, Reviewer, Analyst) coordinated via LangGraph state machine
 - **Triple Hybrid Retrieval**: Combines vector search (60%), BM25 keyword matching (30%), and graph traversal (10%)
 - **Cyclic Feedback Loop**: Automatic quality evaluation with intelligent retry and strategy rotation
-- **Semantic Chunking**: Topic-boundary detection that preserves contextual relationships
-- **Knowledge Graph Integration**: Neo4j-powered entity relationship mapping for complex queries
 - **Local or Cloud**: Runs locally with Ollama or use OpenAI API for enhanced quality
+
+### Advanced Document Processing
+- **Layout-Aware PDF Parsing**: Docling-powered conversion to structured Markdown preserving tables, headers, and multi-column layouts
+- **Hierarchical Parent-Child Chunking**: Large parent sections (1500 tokens) linked to precise child chunks (300 tokens) for contextual retrieval
+- **Entity Resolution**: Fuzzy matching deduplicates similar entities (e.g., "Bob Smith" ↔ "Bob" ↔ "Robert Smith") to improve graph connectivity
+- **Knowledge Graph Integration**: Neo4j-powered entity relationship mapping with automatic entity disambiguation
 
 ## Architecture
 
@@ -82,6 +87,48 @@ A production-ready retrieval-augmented generation system featuring multi-agent o
 
 **Deduplication:** The hybrid retrieval automatically identifies and removes duplicate documents that may be retrieved by multiple methods (e.g., same document found by both vector and BM25 search). Scores are merged for duplicates, ensuring diverse and non-redundant results.
 
+### Document Processing Pipeline
+```
+           PDF/TXT Documents
+                  │
+                  ▼
+      ┌───────────────────────┐
+      │  Docling Parser       │
+      │  (Layout-Aware)       │
+      └───────────┬───────────┘
+                  │
+            Structured Markdown
+          (Tables, Headers, etc)
+                  │
+                  ▼
+      ┌───────────────────────┐
+      │  Hierarchical Chunker │
+      └───────────┬───────────┘
+                  │
+        ┌─────────┴─────────┐
+        ▼                   ▼
+   Parent Nodes        Child Nodes
+   (1500 tokens)       (300 tokens)
+        │                   │
+        └────────┬──────────┘
+                 │
+                 ▼
+        Vector Embeddings
+        (Qdrant Storage)
+                 │
+                 ▼
+      ┌───────────────────────┐
+      │  Entity Extraction    │
+      │  + Fuzzy Matching     │
+      └───────────┬───────────┘
+                  │
+          Deduplicated Entities
+                  │
+                  ▼
+      Knowledge Graph (Neo4j)
+  (Parent)-[:CONTAINS]->(Child)
+```
+
 ## Getting Started
 
 ### Option 1: Sample Corporate Documents (Quick Start)
@@ -122,15 +169,17 @@ python scripts/demo_stackoverflow.py
 agentic-rag/
 ├── src/
 │   ├── models.py        # LLM & embedding initialization
-│   ├── databases.py     # Vector (Qdrant) & Graph (Neo4j) wrappers
+│   ├── databases.py     # Vector (Qdrant) & Graph (Neo4j) with entity resolution
 │   ├── retriever.py     # Triple hybrid retriever (Vector+BM25+Graph)
 │   ├── orchestrator.py  # Multi-agent system with LangGraph
 │   └── agent.py         # Legacy single-agent (for comparison)
 ├── scripts/
-│   ├── index_documents.py  # Load and index data
-│   └── demo.py             # Multi-agent demo
+│   ├── index_documents.py      # Load and index with Docling + hierarchical chunking
+│   ├── demo.py                 # Multi-agent demo
+│   ├── demo_stackoverflow.py   # Python Q&A demo
+│   └── load_stackoverflow_data.py  # Load Stack Overflow dataset
 ├── data/
-│   └── sample_documents/   # Sample company docs
+│   └── sample_documents/   # Sample company docs (PDF/TXT)
 ├── requirements.txt
 ├── docker-compose.yml
 └── README.md
@@ -154,11 +203,17 @@ agentic-rag/
 
 ## Production Readiness
 
+### Core System
 - Multi-agent architecture with LangGraph state machine (373 lines)
 - Cyclic feedback loop with up to 2 retry iterations
 - Triple hybrid retrieval (Vector 60%, BM25 30%, Graph 10%)
-- Semantic chunking at topic boundaries
 - Result caching and quality-based routing
+
+### Advanced Processing
+- **Hierarchical chunking**: Parent nodes (1500 tokens) → Child nodes (300 tokens) with 1:4.2 average ratio
+- **Entity resolution**: Fuzzy matching (85% threshold) deduplicates ~1000+ entities per indexing
+- **Layout-aware parsing**: Docling converts PDFs to structured Markdown preserving document structure
+- **Graph optimization**: `(Parent)-[:CONTAINS]->(Child)` relationships for context traversal
 
 ## Configuration
 
@@ -196,7 +251,8 @@ NEO4J_PASSWORD=password123
 **Framework:** LangGraph 0.2 • LlamaIndex 0.12 • Python 3.12+  
 **LLMs:** Ollama (qwen2.5:7b, nomic-embed-text) • OpenAI (gpt-4, text-embedding-3)  
 **Databases:** Qdrant (vector) • Neo4j (graph)  
-**Retrieval:** BM25 keyword ranking • Semantic chunking  
+**Document Processing:** Docling (layout-aware PDF) • RapidFuzz (entity matching)  
+**Retrieval:** BM25 keyword ranking • Hierarchical parent-child chunking  
 **Infrastructure:** Docker & Docker Compose
 
 ## Potential Feature Roadmap
